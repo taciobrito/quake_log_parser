@@ -21,6 +21,13 @@ class MeansOfDeath extends Model
   ];
 
   /**
+   * Indicates if the model should be timestamped.
+   *
+   * @var bool
+   */
+  public $timestamps = false;
+
+  /**
 	* return all deaths of this mean
   */
   public function kills() {

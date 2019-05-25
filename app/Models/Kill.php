@@ -16,6 +16,13 @@ class Kill extends Model
   ];
 
   /**
+   * Indicates if the model should be timestamped.
+   *
+   * @var bool
+   */
+  public $timestamps = false;
+
+  /**
 	* return data game in this kill
   */
   public function game() {

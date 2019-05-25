@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function() {
-	echo "<pre>";
-	var_dump(file(public_path('logs/games.log')));
-	echo "</pre>";
-});
-Route::get('/layout', ['as' => 'home', 'uses' => 'HomeController@index']);
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+
+Route::get('/log', ['as' => 'log', 'uses' => 'HomeController@log']);
