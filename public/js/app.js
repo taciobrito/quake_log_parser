@@ -1799,6 +1799,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ranking',
   data: function data() {
@@ -1818,6 +1823,11 @@ __webpack_require__.r(__webpack_exports__);
         kills: -1
       }]
     };
+  },
+  methods: {
+    getColorValue: function getColorValue(value) {
+      return value > 0 ? '#fff' : '#f7a600';
+    }
   }
 });
 
@@ -6280,7 +6290,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "body {\n  font-family: \"Roboto\", sans-serif;\n}", ""]);
+exports.push([module.i, "body {\n  font-family: \"Roboto\", sans-serif;\n  background: #dadada;\n}\n.ranking {\n  margin: 30px auto 0 auto;\n  width: 400px;\n}\n.ranking h2 {\n  text-transform: uppercase;\n  font-weight: 700;\n}\n.search input {\n  background: #dadada;\n  border-color: #fff;\n}\n.search input:focus {\n  background: #f3f2f2;\n}\n.search button {\n  border-radius: 0;\n  color: #f7a600;\n  width: 150px;\n}\n.list table thead {\n  background: #f7a600;\n  padding: 0 !important;\n}\n.list table thead tr th {\n  text-transform: uppercase;\n  font-size: 22px;\n  font-weight: 700;\n}\n.list table tbody {\n  color: #fff;\n}\n.list table tbody tr:nth-child(even) {\n  background: #646363;\n}\n.list table tbody tr:nth-child(odd) {\n  background: #7c7b7b;\n}\n.list table tbody tr:hover {\n  background: rgba(124, 123, 123, 0.4);\n}\n.poison {\n  width: 27px;\n}", ""]);
 
 // exports
 
@@ -37768,26 +37778,35 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("header", [_c("h2", [_vm._v(_vm._s(_vm.titulo))])]),
-    _vm._v(" "),
-    _c("section", [
-      _vm._m(0),
+    _c("div", { staticClass: "ranking" }, [
+      _c("header", [_c("h2", [_vm._v(_vm._s(_vm.titulo))])]),
       _vm._v(" "),
-      _c("div", { staticClass: "list" }, [
-        _c("table", { staticClass: "table table-stripped table-hover" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.kills, function(kill, idx) {
-              return _c("tr", { key: idx }, [
-                _c("td", [_vm._v(_vm._s(kill.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(kill.kills))])
-              ])
-            }),
-            0
-          )
+      _c("section", [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "list" }, [
+          _c("table", { staticClass: "table" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.kills, function(kill, idx) {
+                return _c("tr", { key: idx }, [
+                  _c("td", [_vm._v(_vm._s(kill.name))]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "text-center",
+                      style: { color: _vm.getColorValue(kill.kills) }
+                    },
+                    [_vm._v(_vm._s(kill.kills))]
+                  )
+                ])
+              }),
+              0
+            )
+          ])
         ])
       ])
     ])
@@ -37799,19 +37818,20 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "search" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "Buscar por nome" }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary btn-flat",
-          attrs: { type: "submit" }
-        },
-        [_vm._v("Buscar")]
-      )
+      _c("div", { staticClass: "input-group mb-3" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Buscar por nome" }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group-append" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
+            [_vm._v("Buscar")]
+          )
+        ])
+      ])
     ])
   },
   function() {
@@ -37822,12 +37842,12 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", [
+        _c("th", { staticClass: "text-right" }, [
           _c("img", {
             staticClass: "poison",
             attrs: { src: "/svg/poison.svg" }
           }),
-          _vm._v("\n\t\t\t\t\t\t\tKills\n\t\t\t\t\t\t")
+          _vm._v("\n\t\t\t\t\t\t\t\tKills\n\t\t\t\t\t\t\t")
         ])
       ])
     ])
