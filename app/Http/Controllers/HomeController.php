@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Game;
 use App\Models\Player;
-use App\Models\Kill;
+use App\Models\GamePlayer;
 use App\Models\MeansOfDeath;
 
 class HomeController extends Controller
@@ -14,12 +14,16 @@ class HomeController extends Controller
 	private $log;
 	// Atributo para receber os dados dos games extraídos do log
 	private $games;
+	// Atributo para receber a lista de players extraídos do log
+	private $players;
 	// Atributo que indexa o game que está sendo registrado no momento
 	private $idx_game;
 
 	function __construct() {
 		// inicializa como array vazio
  		$this->games = [];
+ 		// inicializa como array vazio
+ 		$this->players = [];
 		// inicia como valor 0 (zero), pois não foi percorrido nenhum game
 		$this->idx_game = 0;
 	}
@@ -43,6 +47,8 @@ class HomeController extends Controller
   		// verifica se é uma linha de início ou fim do game
   		if (!$isGameStart && !$isGameEnd) {
   			// caso verdadeira a condição:
+  			$players = $this->getPlayers($idx, $row);
+  			if(count($players) > 0) print_r($players);
   		}
   	}
   	print_r($this->games);
@@ -60,7 +66,7 @@ class HomeController extends Controller
   		// seta o índice do game corrente
   		$this->idx_game++;
   		// cria no array de games, um novo game com seus dados iniciais
-  		$this->games['game_'.$this->idx_game] = [
+  		$this->games['game_'.$this->idx_game]['game'] = [
   			'description' => 'Game '.$this->idx_game,
   			'start' => $this->getTime($row),
   		];
@@ -79,15 +85,15 @@ class HomeController extends Controller
   		// verifica se finaliza o game
   		if(count($match) > 0) {
   			// seta a hora que finalizou o game
-  			$this->games['game_'.$this->idx_game]['end'] = $this->getTime($row);
+  			$this->games['game_'.$this->idx_game]['game']['end'] = $this->getTime($row);
   		}
   	} else {
   		// verifica se existe um game anterior ao atual
 	  	if (isset($this->games['game_'.($this->idx_game -1)])) {
 	  		// verifica se o game anterior possui a hora em que foi finalizado
-	  		if (!isset($this->games['game_'.($this->idx_game -1)]['end'])) {
+	  		if (!isset($this->games['game_'.($this->idx_game -1)]['game']['end'])) {
 	  			// caso não tenha finalizado, seta a hora que finalizou o game anterior
-	  			$this->games['game_'.($this->idx_game -1)]['end'] = $this->getTime($this->log[($idx -1)]);
+	  			$this->games['game_'.($this->idx_game -1)]['game']['end'] = $this->getTime($this->log[($idx -1)]);
 	  		}
 	  	}
   	}
@@ -102,4 +108,31 @@ class HomeController extends Controller
   	return $match[0] ?? null;
   }
   // Fim getTime()
+
+  // função que retorna o nome do(s) players caso exista na linha do log
+  private function getPlayers($idx, $row) {
+  	// :\s([^:]+)\skilled\s(.*?)\sby\s[a-zA-Z_]+
+  	preg_match('/:\s([^:]+)\skilled\s(.*?)\sby\s[a-zA-Z_]+/', $row, $match_players);
+  	if (count($match_players) > 0) {
+  		if ($match_players[1] == '<world>') {
+  			return [
+  				$match_players[2],
+  			];
+  		} else {
+  			return [
+  				$match_players[1],
+  				$match_players[2],
+  			];
+  		}
+  	} else {
+  		preg_match('/\sn\\\[a-zA-Z_\s]+/', $row, $match_players);
+  		if (count($match_players) > 0) {
+  			return [
+  				str_replace('n\\', '', $match_players),
+  			];
+  		}
+  	}
+  	return [];
+  }
+  // Fim getPlayers()
 }

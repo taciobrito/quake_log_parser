@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Kill extends Model
+class GamePlayer extends Model
 {
+  protected $table = 'game_player';
+
   /**
    * The attributes that are mass assignable.
    *
    * @var array
    */
   protected $fillable = [
-		'world_killed', 'killed_at', 'game_id', 'player_kill_id', 'player_killed_id', 'means_of_death_id',
+		'world_killed', 'killed_at', 'player_killed', 'game_id', 'player_id', 'other_player_id', 'means_of_death_id',
   ];
 
   /**
@@ -33,14 +35,14 @@ class Kill extends Model
 	* return data player kill in this kill
   */
   public function player_kill() {
-  	return $this->belongsTo('App\Models\Player', 'player_kill_id');
+  	return $this->belongsTo('App\Models\Player', $this->player_killed == true ? 'other_player_id' : 'player_id');
   }
 
   /**
 	* return data player killed in this kill
   */
   public function player_killed() {
-  	return $this->belongsTo('App\Models\Player', 'player_killed_id');
+  	return $this->belongsTo('App\Models\Player', $this->player_killed == true ? 'player_id' : 'other_player_id');
   }
 
   /**
