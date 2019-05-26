@@ -13,4 +13,4 @@
 
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
-Route::get('/log', ['as' => 'log', 'uses' => 'HomeController@log']);
+Route::get('/log', ['as' => 'log', 'uses' => 'LogController@index']);
