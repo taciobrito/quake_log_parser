@@ -26,7 +26,7 @@ class Player extends Model
 	* return all killeds this player
   */
   public function killeds() {
-  	return $this->hasMany('App\Models\Kill', 'player_kill_id');
+  	return $this->hasMany('App\Models\Kill', 'player_killer_id');
   }
 
   /**
@@ -34,5 +34,12 @@ class Player extends Model
   */
   public function deaths() {
   	return $this->hasMany('App\Models\Kill', 'player_killed_id');
+  }
+
+  /**
+  * return games list of this player
+  */
+  public function games() {
+    return $this->belongsToMany('App\Models\Game', 'game_player', 'player_id', 'game_id');
   }
 }

@@ -12,5 +12,5 @@
 */
 
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
-
+Route::get('/games', ['as' => 'games', 'uses' => 'HomeController@games']);
 Route::get('/log', ['as' => 'log', 'uses' => 'LogController@index']);

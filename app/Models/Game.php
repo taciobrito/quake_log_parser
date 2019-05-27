@@ -28,4 +28,11 @@ class Game extends Model
   public function kills() {
   	return $this->hasMany('App\Models\Kill');
   }
+
+  /**
+  * return players list of this game
+  */
+  public function players() {
+    return $this->belongsToMany('App\Models\Player', 'game_player', 'game_id', 'player_id');
+  }
 }
