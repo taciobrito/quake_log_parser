@@ -1804,29 +1804,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ranking',
+  created: function created() {
+    this.getKills();
+  },
   data: function data() {
     return {
       titulo: 'Ranking',
-      kills: [{
-        name: 'Udaectus Verum Quiel',
-        kills: 70
-      }, {
-        name: 'Udaectus',
-        kills: 23
-      }, {
-        name: 'Verum',
-        kills: 12
-      }, {
-        name: 'Quiel',
-        kills: -1
-      }]
+      kills: [],
+      buscar: '',
+      filtrarPesquisa: false,
+      loading: false
     };
   },
   methods: {
+    getKills: function getKills() {
+      var _this = this;
+
+      this.loading = true;
+      axios.get('kills').then(function (response) {
+        return _this.kills = response.data;
+      })["catch"](function (error) {
+        return alert('Houve um erro ao carregar a lista de Kills!');
+      })["finally"](function () {
+        return _this.loading = false;
+      });
+    },
+    pesquisa: function pesquisa() {
+      if (this.buscar != '') {
+        this.filtrarPesquisa = true;
+      } else {
+        this.filtrarPesquisa = false;
+      }
+    },
     getColorValue: function getColorValue(value) {
       return value > 0 ? '#fff' : '#f7a600';
+    }
+  },
+  computed: {
+    listKills: function listKills() {
+      var _this2 = this;
+
+      function compare(a, b) {
+        if (a.kills < b.kills) return 1;
+        if (a.kills > b.kills) return -1;
+        return 0;
+      }
+
+      if (this.filtrarPesquisa) {
+        return this.kills.filter(function (kill) {
+          return kill.name.indexOf(_this2.buscar) > -1;
+        }).sort(compare);
+        this.filtrarPesquisa = false;
+      } else {
+        return this.kills.sort(compare);
+      }
     }
   }
 });
@@ -6290,7 +6329,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "body {\n  font-family: \"Roboto\", sans-serif;\n  background: #dadada;\n}\n.ranking {\n  margin: 30px auto 0 auto;\n  width: 400px;\n}\n.ranking h2 {\n  text-transform: uppercase;\n  font-weight: 700;\n}\n.search input {\n  background: #dadada;\n  border-color: #fff;\n}\n.search input:focus {\n  background: #f3f2f2;\n}\n.search button {\n  border-radius: 0;\n  color: #f7a600;\n  width: 150px;\n}\n.list table thead {\n  background: #f7a600;\n  padding: 0 !important;\n}\n.list table thead tr th {\n  text-transform: uppercase;\n  font-size: 22px;\n  font-weight: 700;\n}\n.list table tbody {\n  color: #fff;\n}\n.list table tbody tr:nth-child(even) {\n  background: #646363;\n}\n.list table tbody tr:nth-child(odd) {\n  background: #7c7b7b;\n}\n.list table tbody tr:hover {\n  background: rgba(124, 123, 123, 0.4);\n}\n.poison {\n  width: 27px;\n}", ""]);
+exports.push([module.i, "body {\n  font-family: \"Roboto\", sans-serif;\n  background: #dadada;\n}\n.ranking {\n  margin: 30px auto 0 auto;\n  width: 400px;\n}\n.ranking h2 {\n  text-transform: uppercase;\n  font-weight: 700;\n}\n.search input {\n  background: #dadada;\n  border-color: #fff;\n}\n.search input:focus {\n  background: #f3f2f2;\n}\n.search button {\n  border-radius: 0;\n  color: #f7a600;\n  width: 150px;\n}\n.list table thead {\n  background: #f7a600;\n  padding: 0 !important;\n}\n.list table thead tr th {\n  text-transform: uppercase;\n  font-size: 22px;\n  font-weight: 700;\n}\n.list table tbody {\n  color: #fff;\n}\n.list table tbody tr:nth-child(even) {\n  background: #646363;\n}\n.list table tbody tr:nth-child(odd) {\n  background: #7c7b7b;\n}\n.list table tbody tr:hover {\n  background: rgba(124, 123, 123, 0.4);\n}\n.poison {\n  width: 27px;\n}\n.loading {\n  background-color: rgba(255, 255, 255, 0.5);\n  position: fixed;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 9999;\n  width: 100%;\n  height: 100vh;\n  top: 0;\n}", ""]);
 
 // exports
 
@@ -37782,7 +37821,46 @@ var render = function() {
       _c("header", [_c("h2", [_vm._v(_vm._s(_vm.titulo))])]),
       _vm._v(" "),
       _c("section", [
-        _vm._m(0),
+        _c("div", { staticClass: "search" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.pesquisa($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.buscar,
+                      expression: "buscar"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Buscar por nome" },
+                  domProps: { value: _vm.buscar },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.buscar = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ]
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "list" }, [
           _c("table", { staticClass: "table" }, [
@@ -37790,7 +37868,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.kills, function(kill, idx) {
+              _vm._l(_vm.listKills, function(kill, idx) {
                 return _c("tr", { key: idx }, [
                   _c("td", [_vm._v(_vm._s(kill.name))]),
                   _vm._v(" "),
@@ -37809,7 +37887,13 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _vm.loading
+      ? _c("div", { staticClass: "loading" }, [
+          _c("img", { attrs: { src: "/svg/loading.svg", alt: "" } })
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -37817,21 +37901,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "search" }, [
-      _c("div", { staticClass: "input-group mb-3" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Buscar por nome" }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "input-group-append" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
-            [_vm._v("Buscar")]
-          )
-        ])
-      ])
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
+        [_vm._v("Buscar")]
+      )
     ])
   },
   function() {
@@ -37847,7 +37922,7 @@ var staticRenderFns = [
             staticClass: "poison",
             attrs: { src: "/svg/poison.svg" }
           }),
-          _vm._v("\n\t\t\t\t\t\t\t\tKills\n\t\t\t\t\t\t\t")
+          _vm._v("\n\t\t\t\t\t\t\t\t\tKills\n\t\t\t\t\t\t\t\t")
         ])
       ])
     ])
@@ -50061,6 +50136,7 @@ try {
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios.defaults.baseURL = "http://localhost:8000/api";
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
