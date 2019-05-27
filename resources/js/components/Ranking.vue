@@ -36,6 +36,10 @@
 						</tbody>
 					</table>
 				</div>
+
+				<div class="report">
+					<a class="btn btn-success float-right" href="/relatorio" target="_blank">Download Death Report</a>
+				</div>
 			</section>
 		</div>
 
@@ -156,4 +160,9 @@
 		width: 100%
 		height: 100vh
 		top: 0
+
+	.report
+		a
+			border-radius: 0
+			width: 100%
 </style>

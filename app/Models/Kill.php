@@ -47,6 +47,6 @@ class Kill extends Model
 	* return mean of death in this kill
   */
   public function mean_of_death() {
-  	return $this->belongsTo('App\Models\MeanOfDeath', 'means_of_death_id');
+  	return $this->belongsTo('App\Models\MeansOfDeath', 'means_of_death_id');
   }
 }

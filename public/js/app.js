@@ -1810,6 +1810,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ranking',
   created: function created() {
@@ -6329,7 +6333,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "body {\n  font-family: \"Roboto\", sans-serif;\n  background: #dadada;\n}\n.ranking {\n  margin: 30px auto 0 auto;\n  width: 400px;\n}\n.ranking h2 {\n  text-transform: uppercase;\n  font-weight: 700;\n}\n.search input {\n  background: #dadada;\n  border-color: #fff;\n}\n.search input:focus {\n  background: #f3f2f2;\n}\n.search button {\n  border-radius: 0;\n  color: #f7a600;\n  width: 150px;\n}\n.list table thead {\n  background: #f7a600;\n  padding: 0 !important;\n}\n.list table thead tr th {\n  text-transform: uppercase;\n  font-size: 22px;\n  font-weight: 700;\n}\n.list table tbody {\n  color: #fff;\n}\n.list table tbody tr:nth-child(even) {\n  background: #646363;\n}\n.list table tbody tr:nth-child(odd) {\n  background: #7c7b7b;\n}\n.list table tbody tr:hover {\n  background: rgba(124, 123, 123, 0.4);\n}\n.poison {\n  width: 27px;\n}\n.loading {\n  background-color: rgba(255, 255, 255, 0.5);\n  position: fixed;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 9999;\n  width: 100%;\n  height: 100vh;\n  top: 0;\n}", ""]);
+exports.push([module.i, "body {\n  font-family: \"Roboto\", sans-serif;\n  background: #dadada;\n}\n.ranking {\n  margin: 30px auto 0 auto;\n  width: 400px;\n}\n.ranking h2 {\n  text-transform: uppercase;\n  font-weight: 700;\n}\n.search input {\n  background: #dadada;\n  border-color: #fff;\n}\n.search input:focus {\n  background: #f3f2f2;\n}\n.search button {\n  border-radius: 0;\n  color: #f7a600;\n  width: 150px;\n}\n.list table thead {\n  background: #f7a600;\n  padding: 0 !important;\n}\n.list table thead tr th {\n  text-transform: uppercase;\n  font-size: 22px;\n  font-weight: 700;\n}\n.list table tbody {\n  color: #fff;\n}\n.list table tbody tr:nth-child(even) {\n  background: #646363;\n}\n.list table tbody tr:nth-child(odd) {\n  background: #7c7b7b;\n}\n.list table tbody tr:hover {\n  background: rgba(124, 123, 123, 0.4);\n}\n.poison {\n  width: 27px;\n}\n.loading {\n  background-color: rgba(255, 255, 255, 0.5);\n  position: fixed;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 9999;\n  width: 100%;\n  height: 100vh;\n  top: 0;\n}\n.report a {\n  border-radius: 0;\n  width: 100%;\n}", ""]);
 
 // exports
 
@@ -37885,7 +37889,9 @@ var render = function() {
               0
             )
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _vm._m(2)
       ])
     ]),
     _vm._v(" "),
@@ -37925,6 +37931,21 @@ var staticRenderFns = [
           _vm._v("\n\t\t\t\t\t\t\t\t\tKills\n\t\t\t\t\t\t\t\t")
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "report" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-success float-right",
+          attrs: { href: "/relatorio", target: "_blank" }
+        },
+        [_vm._v("Download Death Report")]
+      )
     ])
   }
 ]
