@@ -68,6 +68,11 @@ A estrutura do framework Laravel, é um pouco extensa, por essa razão, decidi l
 |    |-- api.php
 |    |-- web.php
 |-- tests
+|    |-- Feature
+|    |-- Unit
+|    |    |-- LogTest.php
+|    |-- CreatesApplication.php
+|    |-- TestCase.php
 |-- .env
 |-- .env.example
 |-- composer.json
@@ -156,6 +161,9 @@ Para visualizar os detalhes de cada jogo, acesse a rota _/games_ no navegador. E
 
 ## Executando os testes unitários
 
+Foram criados alguns testes, para validar alguns dos métodos usados na leitura e extração do _games.log_. Os testes se encotram em: _tests/Feature/Unit/_.
+
+Para rodar os testes, basta que, pelo terminal, no diretório raíz da aplicação rode o camando **vendor/bin/phpunit**, e aguarde a verificação dos que passaram e os que não passaram.
 
 ## Conclusão e agradecimentos
 

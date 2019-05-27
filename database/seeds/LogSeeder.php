@@ -72,7 +72,7 @@ class LogSeeder extends Seeder
   }
   // Fim log()
   // função responsável por registrar o início de cada game
-  private function gameStart($idx, $row) {
+  public function gameStart($idx, $row) {
   	// retorna um array de ocorrência caso seja o log que inicia um game
   	preg_match('/InitGame/', $row, $match);
   	// verifica se inicia o jogo
@@ -95,7 +95,7 @@ class LogSeeder extends Seeder
   // Fim gameStart()
 
   // função responsável pro registrar o fim do game
-  private function gameEnd($idx, $row = null) {
+  public function gameEnd($idx, $row = null) {
   	// verifica se foi enviada uma linha do log
   	if ($row) {
   		// verifica se nessa linha há a ocorrência que finaliza o game
@@ -123,7 +123,7 @@ class LogSeeder extends Seeder
   // Fim gameEnd()
 
   // função que retorna o nome do(s) players caso exista na linha do log
-  private function getPlayersLog($idx, $row) {
+  public function getPlayersLog($idx, $row) {
   	// :\s([^:]+)\skilled\s(.*?)\sby\s[a-zA-Z_]+
   	preg_match('/:\s([^:]+)\skilled\s(.*?)\sby\s[a-zA-Z_]+/', $row, $match_players);
   	if (count($match_players) > 0) {
@@ -149,7 +149,7 @@ class LogSeeder extends Seeder
   // Fim getPlayersLog()
   
   // função que retorna o kill registrado da linha do log
-  private function getKill($row) {
+  public function getKill($row) {
   	// regex que resgata o registro de kill
   	preg_match('/:\s([^:]+)\skilled\s(.*?)\sby\s[a-zA-Z_]+/', $row, $match);
   	// verifica se encontrou o kill
@@ -172,7 +172,7 @@ class LogSeeder extends Seeder
   // Fim getKill()
 
   // função que retorna o killer
-  private function getKiller($kill) {
+  public function getKiller($kill) {
   	// regex que resgata o player que matou
   	preg_match('/(?<=:\s)(.*?)(?=\skilled)/', $kill, $match);
   	// verifica se encontrou o killer
@@ -181,7 +181,7 @@ class LogSeeder extends Seeder
   // Fim getKiller()
 
   // função que retorna o killed
-  private function getKilled($kill) {
+  public function getKilled($kill) {
   	// regex que resgata o player que morreu
   	preg_match('/(?<=killed\s)(.*?)(?=\sby)/', $kill, $match);
   	// verifica se encontrou o killer
@@ -190,7 +190,7 @@ class LogSeeder extends Seeder
   // Fim getKilled()
 
   // função que retorna o MeansOfDeath
-  private function getMeansOfDeath($kill) {
+  public function getMeansOfDeath($kill) {
   	// regex que resgata o motivo da morte
   	preg_match('/(?<=by\s)(.*?)(?=$)/', $kill, $match);
   	// verifica se encontrou o killer
@@ -199,18 +199,18 @@ class LogSeeder extends Seeder
   // Fim getMeansOfDeath()
 
   // função que retorna o MeansOfDeath do banco de dados
-  private function getMeansOfDeathFromDB($description) {
+  public function getMeansOfDeathFromDB($description) {
   	// retorna conforme a descrição do registro
   	return $this->means_of_death->firstWhere('description', $description);
   }
   // Fim getMeansOfDeathFromDB()
 
-  private function getTypeKiller($killer) {
+  public function getTypeKiller($killer) {
   	return $killer == '<world>' ? 'world' : 'player';
   }
 
   // função que retorna a hora registrada da linha do log
-  private function getTime($row) {
+  public function getTime($row) {
   	// resgata a hora registrada na linha do log
   	preg_match('/\d?\d:\d\d/', $row, $match);
   	// retorna a hora do log ou nulo, caso não tenha sido encontrada
@@ -219,7 +219,7 @@ class LogSeeder extends Seeder
   // Fim getTime()
 
   // função que salva o game
-  private function saveGame($data) {
+  public function saveGame($data) {
   	// cria o game no banco de dados
   	$game = Game::create($data['game']);
   	// associa os players do game registrando no banco de dados
